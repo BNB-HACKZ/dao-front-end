@@ -34,8 +34,8 @@ export default function Navbar() {
             >
               LOGIN
             </Link>
-            <Link href="/" className="long-btn py-2 px-10 text-[#8E8F94]">
-              LAUNCH APP
+            <Link href="/" className="long-btn py-2 px-10">
+              <span className="text-black">LAUNCH APP</span>
             </Link>
           </Popover.Group>
           <div className="-my-2 -mr-2 md:hidden">

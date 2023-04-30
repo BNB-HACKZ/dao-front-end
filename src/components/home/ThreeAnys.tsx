@@ -6,7 +6,7 @@ import Image from "next/image";
 const ThreeAnys = () => {
   return (
     <div className="relative w-full min-h-[70vh] lg:h-[90vh] max-w-7xl mx-auto flex flex-col gap-4 px-6 py-8">
-      <div className="w-full max-w-3xl mx-auto h-[150px] bg-black border border-[#23293D] -mt-10 py-6 rounded-2xl flex flex-col items-center justify-center gap-4">
+      <div className="w-full max-w-3xl mx-auto h-[150px] bg-black bg-opacity-30 border border-[#23293D] -mt-10 py-6 rounded-2xl flex flex-col items-center justify-center gap-4">
         <h1 className="text-4xl font-semibold text-center pt-4 text-[#89D472]">
           $128,234,600
         </h1>

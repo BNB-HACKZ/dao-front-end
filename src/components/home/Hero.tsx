@@ -1,5 +1,6 @@
 import { HeroBg } from "../../../public";
 import Image from "next/image";
+import { RocketLaunchIcon } from "@heroicons/react/24/outline";
 
 export const Hero = () => {
   return (
@@ -25,8 +26,9 @@ export const Hero = () => {
             and raise funds for your causes.
           </p>
 
-          <button className="long-btn py-3 px-8 mt-8">
+          <button className="long-btn py-3 px-8 mt-8 flex items-center gap-2">
             <span className="text-black uppercase">Build YOUR DAO</span>
+            <RocketLaunchIcon className="w-6 h-6 text-black" />
           </button>
         </div>
       </div>
