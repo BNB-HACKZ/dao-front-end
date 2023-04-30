@@ -60,7 +60,7 @@ export default function Navbar() {
           focus
           className="absolute inset-x-0 top-0 origin-top-right transform p-2 transition md:hidden"
         >
-          <div className="divide-y-2 divide-gray-50 rounded-lg bg-black shadow-lg ring-1 ring-black ring-opacity-5 w-full border border-white">
+          <div className="divide-y-2 divide-gray-50 rounded-lg bg-black shadow-lg ring-1 ring-black ring-opacity-5 w-full border border-white z-50">
             <div className="px-5 pt-5 pb-6">
               <div className="flex items-center justify-between">
                 <div>
