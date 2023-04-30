@@ -1,98 +1,20 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-
-* {
-    font-family: 'Space Grotesk';
-    font-style: normal;
-    font-weight: 500;
-    
-}
-.cont{
-    background: #1E1E1E;;
+@layer base {
+    body {
+        font-family: 'Space Grotesk', sans-serif;
+    }
 }
 
-.navBar {
-    box-sizing: border-box;
-position: absolute;
-width: 1728px;
-height: 105px;
-left: 0px;
-top: 0px;
-
-background: #0C0F1A;
-border-bottom: 2px solid #181D33;
-backdrop-filter: blur(32px);
-}
-.logo {
-    width: 157px;
-height: 41px;
-
-font-family: 'Space Grotesk';
-font-style: normal;
-font-weight: 400;
-font-size: 32.3482px;
-line-height: 41px;
-color: #FFFFFF;
-opacity: 0.72;
-/* Inside auto layout */
-flex: none;
-order: 1;
-flex-grow: 0;
+.long-btn {
+    @apply bg-[#89D472] hover:bg-[#71b15d] text-white rounded-lg focus:outline-none trans
 }
 
-.link {
-    width: 57px;
-height: 18px;
-
-font-family: 'Space Grotesk';
-font-style: normal;
-font-weight: 500;
-font-size: 16px;
-line-height: 115%;
-/* or 18px */
-
-display: flex;
-align-items: center;
-letter-spacing: 0.08em;
-
-/* Neutral/600 */
-
-color: #8E8F94;
-
-
-/* Inside auto layout */
-
-flex: none;
-order: 0;
-flex-grow: 0;
-}
-
-.btn {
- 
-/* Auto layout */
-
-display: flex;
-flex-direction: row;
-justify-content: center;
-align-items: center;
-padding: 10px 20px;
-gap: 10px;
-
-width: 170px;
-height: 38px;
-
-/* LIME */
-
-background: #89D472;
-border-radius: 4px;
-
-/* Inside auto layout */
-
-flex: none;
-order: 1;
-flex-grow: 0;
+.trans {
+    @apply transition-all duration-300 ease-in-out;
 }
 
 .hero{
@@ -103,4 +25,7 @@ flex-grow: 0;
     top: 81px;
     background-image: url('/bg.png');
 
+}
+.bfpe{
+    background: #89D472;
 }
