@@ -26,13 +26,13 @@ export default function Navbar() {
               href="/"
               className="text-base font-medium text-gray-500 hover:text-gray-900"
             >
-              ABOUT
+              CAMPAIGNS
             </Link>
             <Link
               href="/"
               className="text-base font-medium text-gray-500 hover:text-gray-900"
             >
-              LOGIN
+              NEW CAMPAIGN
             </Link>
             <Link href="/" className="long-btn py-2 px-10">
               <span className="text-black">LAUNCH APP</span>
@@ -83,13 +83,13 @@ export default function Navbar() {
                   href="/"
                   className="text-base font-medium text-gray-200 hover:text-gray-300"
                 >
-                  ABOUT
+                  CAMPAIGNS
                 </Link>
                 <Link
                   href="/"
                   className="text-base font-medium text-gray-200 hover:text-gray-300"
                 >
-                  LOGIN
+                  NEW CAMPAIGN
                 </Link>
               </div>
               <div className="w-full">
