@@ -8,7 +8,7 @@ import BeforeFooter from "./home/BeforeFooter";
 const LandingPage = () => {
   return (
     <Layout>
-          <Hero />
+      <Hero />
       <ThreeAnys />
       <BeforeFooter />
       <NewsLetter />
