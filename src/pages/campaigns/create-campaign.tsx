@@ -1,6 +1,11 @@
-import { Navbar } from "@/components";
 import Layout from "@/components/common/Layout";
 import { useState } from "react";
+import toast, { Toaster } from 'react-hot-toast';
+
+type ImageState = {
+  file: File | null
+  previewUrl: string | null
+}
 
 const CreateCampaign = () => {
   const [tab1, setTab1] = useState<boolean>(true);
@@ -8,11 +13,54 @@ const CreateCampaign = () => {
   const [name, setName] = useState("");
   const [campaignName, setCampaignName] = useState("");
   const [link, setLink] = useState("");
+  const [projectDetails, setProjectDetails] = useState("");
+  const [coverImage, setCoverImage] = useState<ImageState>({
+    file: null,
+    previewUrl: null,
+  })
+  const [coverImageUrl, setCoverImageUrl] = useState('');
+
+  const handleCoverImageChange = (e: any) => {
+    setCoverImage(e.target.files[0])
+    toast.success('Successfully added!');
+    setCoverImageUrl(URL.createObjectURL(e.target.files[0]))
+  }
+
+  const handleTabChange = () => {
+    if (!name) {
+      toast.error('please fill in your name')
+    }
+    if (!campaignName) {
+      toast.error('please fill in the Campaign name')
+    }
+    else {
+       setTab1(false);
+       setTab2(true);
+
+    }
+  
+   
+  }
+
+
+  const CreateCampaign = async (e: any) => {
+    e.preventDefault();
+    try {
+
+      
+      
+    } catch (error) {
+
+      console.log(error);
+      
+    }
+  }
 
   return (
     <>
       <Layout>
-        <div className="">
+        <div>
+        <Toaster />
           <div>
             <h1 className="startC font-bold">Start a Campaign</h1>
           </div>
@@ -35,7 +83,8 @@ const CreateCampaign = () => {
               <div className="mb-7">
                 <label className="block text-white font-bold mb-2">Name</label>
                 <input
-                  className=" bg-gradient-to-r from-gray-800 to-gray-700 text-gray-800 border rounded w-4/12 h-12 py-2 px-3  leading-tight "
+                  onChange={(e)=>{setName(e.target.value)}}
+                  className=" bg-gradient-to-r from-gray-800 to-gray-700 text-white border rounded w-4/12 h-12 py-2 px-3  leading-tight "
                   placeholder="Fullname"
                 />
               </div>
@@ -44,7 +93,8 @@ const CreateCampaign = () => {
                   Name of your Campaign
                 </label>
                 <input
-                  className=" bg-gradient-to-r from-gray-800 to-gray-700 text-gray-800 border rounded w-4/12 h-12 py-2 px-3  leading-tight "
+                 onChange={(e)=>{setCampaignName(e.target.value)}}
+                  className=" bg-gradient-to-r from-gray-800 to-gray-700 text-white border rounded w-4/12 h-12 py-2 px-3  leading-tight "
                   placeholder="E.g. Grant to build a Solar powered shoe"
                 />
               </div>
@@ -53,16 +103,14 @@ const CreateCampaign = () => {
                   Relevant Links
                 </label>
                 <input
-                  className=" bg-gradient-to-r from-gray-800 to-gray-700 text-gray-800 border rounded w-4/12 h-12 py-2 px-3  leading-tight "
+                 onChange={(e)=>{setLink(e.target.value)}}
+                  className=" bg-gradient-to-r from-gray-800 to-gray-700 text-white  border rounded w-4/12 h-12 py-2 px-3  leading-tight "
                   placeholder="www.xyz.com"
                 />
               </div>
               <div className=" justify-center">
                 <button
-                  onClick={() => {
-                    setTab1(false);
-                    setTab2(true);
-                  }}
+                  onClick={handleTabChange}
                   className="bg-green-400 hover:bg-green-700 w-4/12 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                   type="button"
                 >
@@ -79,7 +127,8 @@ const CreateCampaign = () => {
                   Project Details
                 </label>
                 <textarea
-                  className=" bg-gradient-to-r from-gray-800 to-gray-700 text-gray-800 border rounded w-4/12 h-48 py-2 px-3  leading-tight "
+                  onChange={(e)=>{setProjectDetails(e.target.value)}}
+                  className=" bg-gradient-to-r from-gray-800 to-gray-700 text-white border rounded w-4/12 h-48 py-2 px-3  leading-tight "
                   placeholder="Brief description of your project"
                 />
               </div>
@@ -90,7 +139,8 @@ const CreateCampaign = () => {
                 </label>
                 <input
                   type="file"
-                  className=" bg-gradient-to-r from-gray-800 to-gray-700 text-gray-800 border-dashed rounded-r-xl border-4 border-grey-500 rounded w-4/14 h-48 py-2 px-3  leading-tight "
+                  onChange={handleCoverImageChange}
+                  className=" bg-gradient-to-r from-gray-800 to-gray-700 text-white border-dashed rounded-r-xl border-4 border-grey-500 rounded w-4/14 h-48 py-2 px-3  leading-tight "
                   placeholder="Brief description of your project"
                 />
               </div>
