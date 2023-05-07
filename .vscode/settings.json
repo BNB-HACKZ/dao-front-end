@@ -6,27 +6,7 @@
     "**/CVS": true,
     "**/.DS_Store": true,
     "**/Thumbs.db": true,
-    ".next": true,
-    ".vscode": true,
-    "node_modules": true,
-    "tsconfig.json": true,
-    "README.md": true,
-    "package.json": true,
-    "next.config.js": true,
-    "next-env.d.ts": true,
-    ".gitignore": true,
-    ".eslintrc.json": true
+    ".vscode": true
   },
-  "hide-files.files": [
-    ".next",
-    ".vscode",
-    "node_modules",
-    "tsconfig.json",
-    "README.md",
-    "package.json",
-    "next.config.js",
-    "next-env.d.ts",
-    ".gitignore",
-    ".eslintrc.json"
-  ]
+  "hide-files.files": [".vscode"]
 }
