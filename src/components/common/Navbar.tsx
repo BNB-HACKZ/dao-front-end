@@ -23,14 +23,14 @@ export default function Navbar() {
             className="hidden space-x-10 md:flex items-center"
           >
             <Link
-              href="/"
-              className="text-base font-medium text-gray-500 hover:text-gray-900"
+              href="/campaigns"
+              className="text-base font-medium text-gray-500"
             >
               CAMPAIGNS
             </Link>
             <Link
-              href="/"
-              className="text-base font-medium text-gray-500 hover:text-gray-900"
+              href="/campaigns/create-campaign"
+              className="text-base font-medium text-gray-500"
             >
               NEW CAMPAIGN
             </Link>

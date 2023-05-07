@@ -1,12 +1,8 @@
-import Layout from "@/components/common/Layout";
 import React from "react";
+import CampaignPage from "@/components/CampaignPage";
 
 const Campaigns = () => {
-  return (
-    <Layout>
-      <div className="container">Campaigns</div>
-    </Layout>
-  );
+  return <CampaignPage />;
 };
 
 export default Campaigns;
