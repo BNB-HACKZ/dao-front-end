@@ -65,16 +65,20 @@ const CreateCampaign = () => {
             <h1 className="startC font-bold">Start a Campaign</h1>
           </div>
 
-          <h2 className="text-xl text-green-400 pl-20 pt-5">
+          <h2 className="text-xl text-[#89D472] pl-20 pt-5">
             Campaign Info{" "}
             <span
               className={`${
-                tab1 ? "p-14 text-gray-400" : "p-14 text-green-400"
+                tab1 ? "p-14 text-gray-400" : "p-14 text-[#89D472]"
               }`}
             >
               More details
             </span>
           </h2>
+
+          {/* <div className="position-indicator">
+            
+          </div> */}
 
           {/* add radio button & line to next tab */}
 
@@ -84,7 +88,7 @@ const CreateCampaign = () => {
                 <label className="block text-white font-bold mb-2">Name</label>
                 <input
                   onChange={(e)=>{setName(e.target.value)}}
-                  className=" bg-gradient-to-r from-gray-800 to-gray-700 text-white border rounded w-4/12 h-12 py-2 px-3  leading-tight "
+                  className=" bg-gradient-to-r from-gray-900 to-gray-900 border-gray-900 text-white border rounded w-4/12 h-12 py-2 px-3  leading-tight "
                   placeholder="Fullname"
                 />
               </div>
@@ -94,7 +98,7 @@ const CreateCampaign = () => {
                 </label>
                 <input
                  onChange={(e)=>{setCampaignName(e.target.value)}}
-                  className=" bg-gradient-to-r from-gray-800 to-gray-700 text-white border rounded w-4/12 h-12 py-2 px-3  leading-tight "
+                  className=" bg-gradient-to-r from-gray-900 to-gray-900 text-white border  border-gray-900  rounded w-4/12 h-12 py-2 px-3  leading-tight "
                   placeholder="E.g. Grant to build a Solar powered shoe"
                 />
               </div>
@@ -104,14 +108,14 @@ const CreateCampaign = () => {
                 </label>
                 <input
                  onChange={(e)=>{setLink(e.target.value)}}
-                  className=" bg-gradient-to-r from-gray-800 to-gray-700 text-white  border rounded w-4/12 h-12 py-2 px-3  leading-tight "
+                  className=" bg-gradient-to-r from-gray-900 to-gray-900 text-white  border  border-gray-900  rounded w-4/12 h-12 py-2 px-3  leading-tight "
                   placeholder="www.xyz.com"
                 />
               </div>
               <div className=" justify-center">
                 <button
                   onClick={handleTabChange}
-                  className="bg-green-400 hover:bg-green-700 w-4/12 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                  className="bfpe hover:bg-green-400 w-4/12 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                   type="button"
                 >
                   Next
@@ -128,29 +132,33 @@ const CreateCampaign = () => {
                 </label>
                 <textarea
                   onChange={(e)=>{setProjectDetails(e.target.value)}}
-                  className=" bg-gradient-to-r from-gray-800 to-gray-700 text-white border rounded w-4/12 h-48 py-2 px-3  leading-tight "
+                  className=" bg-gradient-to-r from-gray-900 to-gray-900 text-white border border-gray-900 rounded w-4/12 h-48 py-2 px-3  leading-tight "
                   placeholder="Brief description of your project"
                 />
               </div>
 
-              <div className="mb-7">
+              <div className="mb-7 relative ">
                 <label className="block text-white font-bold mb-2">
                   Cover Image
                 </label>
+                
                 <input
                   type="file"
                   onChange={handleCoverImageChange}
-                  className=" bg-gradient-to-r from-gray-800 to-gray-700 text-white border-dashed rounded-r-xl border-4 border-grey-500 rounded w-4/14 h-48 py-2 px-3  leading-tight "
-                  placeholder="Brief description of your project"
+                  className="file-input bg-gradient-to-r from-gray-900 to-gray-900 text-white border-dashed rounded-r-xl border-2 border-gray-600 rounded w-4/14 h-48 py-2 px-3  leading-tight "
+                  
                 />
               </div>
 
+              
+
+
               <div className=" justify-center">
                 <button
-                  className="bg-green-400 hover:bg-green-700 w-4/12 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                  className="bfpe hover:bg-green-700 w-4/12 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                   type="button"
                 >
-                  Save
+                  Publish
                 </button>
               </div>
             </form>
