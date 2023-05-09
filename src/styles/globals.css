@@ -42,9 +42,16 @@
     background: #89D472;
 }
 .startC {
+    
 Font-size: 48px;
 color:  #89D472;
 padding-top: 78px;
 padding-left: 79px
 }
 
+.position-indicator {
+    border-bottom: 4px solid #83d46a;
+    width: 50px;
+    margin-top: 6px;
+    margin-left: 120px;
+  }
