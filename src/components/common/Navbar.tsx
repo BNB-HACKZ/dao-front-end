@@ -29,10 +29,10 @@ export default function Navbar() {
               CAMPAIGNS
             </Link>
             <Link
-              href="/campaigns/create-campaign"
+              href="/join-our-dao"
               className="text-base font-medium text-gray-500"
             >
-              NEW CAMPAIGN
+              JOIN OUR DAO
             </Link>
             <Link href="/" className="long-btn py-2 px-10">
               <span className="text-black">LAUNCH APP</span>
