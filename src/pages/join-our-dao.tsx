@@ -1,7 +1,9 @@
 import React from "react";
 import Layout from "@/components/common/Layout";
+import { useRouter } from "next/router";
 
 const JoinOurDao = () => {
+  const router = useRouter();
   return (
     <Layout>
       <div className="text-white w-full h-full flex flex-col items-center px-4 pb-20">
@@ -38,7 +40,9 @@ const JoinOurDao = () => {
         </div>
 
         <div className="flex flex-col items-center justify-center gap-4 w-full max-w-[500px] mx-auto">
-          <button className="long-btn px-20 py-3 w-full">
+          <button
+            onClick={() => router.push("/join")}
+            className="long-btn px-20 py-3 w-full">
             <span className="text-black">JOIN DAOVATION</span>
           </button>
         </div>

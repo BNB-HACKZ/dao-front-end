@@ -16,7 +16,7 @@ export default function Input(props: Props) {
         {props.label}
       </label>
       <input
-        className="w-full bg-transparent text-white border border-[#363E5B] rounded-md px-3 py-2 focus:ring-0 focus:border-none"
+        className="w-full bg-transparent text-white border border-[#363E5B] rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:border-none"
         type={props.type}
         name={props.name}
         placeholder={props.placeholder}

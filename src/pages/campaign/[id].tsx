@@ -26,7 +26,7 @@ const Campaign = () => {
       <ContributeModal isOpen={showModal} closeModal={() => setShowModal(false)} />
     <Layout>
       <div>
-        <div className="w-full flex flex-col lg:flex-row max-w-7xl mx-auto">
+        <div className="w-full flex flex-col lg:flex-row max-w-7xl mx-auto lg:py-8">
           <div className="w-full lg:w-1/2">
             {/* Image */}
             <div className="w-full h-[250px] lg:h-[400px] rounded-xl overflow-hidden">
