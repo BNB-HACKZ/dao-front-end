@@ -10,9 +10,9 @@ const CampaignPage = () => {
     <Layout>
       <div className="text-white max-w-7xl mx-auto px-4">
         <StartCampaignBanner />
+        <Categories />
         <PopularCauses />
         <RecentCampaigns />
-        <Categories />
       </div>
     </Layout>
   );

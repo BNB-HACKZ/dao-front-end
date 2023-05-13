@@ -2,6 +2,7 @@ import { Fragment } from "react";
 import { Popover, Transition } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
+import { ConnectButton } from "@rainbow-me/rainbowkit";
 
 // function classNames(...classes) {
 //     return classes.filter(Boolean).join(' ')
@@ -10,7 +11,7 @@ import Link from "next/link";
 export default function Navbar() {
   return (
     <Popover className="relative bg-black">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6">
+      <div className="mx-auto max-w-7xl px-4 sm:px-0">
         <div className="flex items-center justify-between py-8 md:space-x-10">
           <div className="flex">
             <Link href="/">
@@ -29,14 +30,12 @@ export default function Navbar() {
               CAMPAIGNS
             </Link>
             <Link
-              href="/campaigns/create-campaign"
+              href="/join-our-dao"
               className="text-base font-medium text-gray-500"
             >
-              NEW CAMPAIGN
+              JOIN OUR DAO
             </Link>
-            <Link href="/" className="long-btn py-2 px-10">
-              <span className="text-black">LAUNCH APP</span>
-            </Link>
+            <ConnectButton />
           </Popover.Group>
           <div className="-my-2 -mr-2 md:hidden">
             <Popover.Button className="inline-flex items-center justify-center rounded-md text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-black">
