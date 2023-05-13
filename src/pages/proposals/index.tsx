@@ -137,7 +137,16 @@ const Proposals = () => {
 
 export default Proposals;
 
-const ProposalCard = ({ title, status, proposer, endTime, id }) => {
+
+type ProposalCardProps = {
+    title: string;
+    status: string;
+    proposer: string;
+    endTime: string;
+    id: number;
+    };
+
+const ProposalCard = ({ title, status, proposer, endTime, id }: ProposalCardProps) => {
   return (
     <Link
       href={`proposal/${id}`}
