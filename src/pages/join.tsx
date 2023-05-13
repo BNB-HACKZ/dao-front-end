@@ -2,6 +2,7 @@ import Layout from "@/components/common/Layout";
 import React, { useState } from "react";
 import Input from "@/components/common/Input";
 import { ArrowUpTrayIcon } from "@heroicons/react/24/outline";
+import Image from "next/image";
 
 const JoinForm = () => {
   const [username, setUsername] = useState<string>("");
@@ -22,8 +23,8 @@ const JoinForm = () => {
           Welcome
         </h1>
         <p className="lg:text-lg py-2 text-center text-[#8E8F94]">
-          Please fill in the form below to join DAOvation, you'd get your own
-          NFT as a proof of membership and be able to vote on proposals.
+          Please fill in the form below to join DAOvation, you&apos;d get your
+          own NFT as a proof of membership and be able to vote on proposals.
         </p>
 
         {/* Form */}
@@ -47,8 +48,9 @@ const JoinForm = () => {
             <label htmlFor="" className="font-medium text-white">
               Set a Profile photo
               <span className="text-[#8E8F94] text-sm">
-               {" "} (Optional, we'd generate one for you if you don&apos;t upload
-                one)
+                {" "}
+                (Optional, we&apos;d generate one for you if you don&apos;t
+                upload one)
               </span>
             </label>
           </div>
@@ -77,7 +79,7 @@ const JoinForm = () => {
             {imageUrl && (
               <div className="flex flex-col justify-center items-center gap-6">
                 <div className=" w-32 square aspect-square overflow-hidden">
-                  <img
+                  <Image
                     src={imageUrl}
                     alt="Preview"
                     className="w-full h-full object-center object-cover"
