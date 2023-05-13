@@ -97,7 +97,7 @@ const Proposals = () => {
           vote for, against or abstain.
         </p>
 
-        <div className="flex overflow-x-scroll mt-4 pb-4">
+        <div className="flex overflow-x-scroll mt-4 py-8">
           {state.map((category, index) => (
             <button
               key={index}
@@ -134,7 +134,7 @@ export default Proposals;
 const ProposalCard = ({ title, status, proposer, endTime }) => {
   return (
     <div className="flex flex-col items-start justify-between w-full h-full p-6 border border-[#333B56] rounded-lg shadow-lg">
-      <div className="flex flex-col items-start justify-between w-full h-full">
+      <div className="flex flex-col items-start justify-between w-full h-full gap-8">
         <div className="flex items-center justify-between w-full">
           <div>
             <h1 className="text-xl font-semibold text-lime">{title}</h1>
@@ -158,7 +158,7 @@ const ProposalCard = ({ title, status, proposer, endTime }) => {
           <div className="flex items-center gap-2">
             <button
               className={`
-                          px-8 py-2 font-semibold text-sm
+                          px-8 py-3 font-semibold text-sm
                             ${status === "Open" ? "bg-lime text-black" : ""}
                             ${
                               status === "Expired"
