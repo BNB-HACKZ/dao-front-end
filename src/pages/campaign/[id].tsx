@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import Layout from "@/components/common/Layout";
 import { ThreeAnysImg } from "../../../public";
 import Image from "next/image";
+import ContributeModal from "@/components/modals/ContributeModal";
 
 const obj = {
   title: "Building a plant powered Blockchain",
@@ -19,7 +20,10 @@ const obj = {
 const Campaign = () => {
   const router = useRouter();
   const { id } = router.query;
+  const [showModal, setShowModal] = React.useState(false);
   return (
+    <>
+      <ContributeModal isOpen={showModal} closeModal={() => setShowModal(false)} />
     <Layout>
       <div>
         <div className="w-full flex flex-col lg:flex-row max-w-7xl mx-auto">
@@ -91,7 +95,9 @@ const Campaign = () => {
               </div>
               {/* Contribute Button */}
               <div className="flex items-center justify-center w-full mt-10">
-                <button className="long-btn w-full py-3 uppercase">
+                  <button
+                    onClick={() => setShowModal(true)}
+                    className="long-btn w-full py-3 uppercase">
                   <span className="text-black">Contribute</span>
                 </button>
               </div>
@@ -99,7 +105,8 @@ const Campaign = () => {
           </div>
         </div>
       </div>
-    </Layout>
+      </Layout>
+      </>
   );
 };
 

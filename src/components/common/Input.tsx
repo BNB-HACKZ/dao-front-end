@@ -5,18 +5,18 @@ interface Props {
   label: string;
   name?: string;
   placeholder: string;
-  value?: string;
+  value?: string | number;
   ref?: React.Ref<HTMLInputElement>;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 export default function Input(props: Props) {
   return (
     <div className="flex flex-col gap-2 w-full">
-      <label className="font-medium" htmlFor={props.name}>
+      <label className="font-medium text-white" htmlFor={props.name}>
         {props.label}
       </label>
       <input
-        className="w-full bg-[#F5F8FE] border border-gray-200 rounded-md px-3 py-2 focus-visible:outline-blue-500 focus:ring-0 focus:border-none"
+        className="w-full bg-transparent text-white border border-[#363E5B] rounded-md px-3 py-2 focus:ring-0 focus:border-none"
         type={props.type}
         name={props.name}
         placeholder={props.placeholder}
