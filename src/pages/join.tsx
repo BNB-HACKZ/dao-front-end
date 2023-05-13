@@ -17,7 +17,7 @@ const JoinForm = () => {
   };
   return (
     <Layout>
-      <div className="flex flex-col items-start w-full min-h-screen max-w-7xl mx-auto">
+      <div className="flex flex-col items-start w-full max-w-7xl mx-auto">
         <h1 className="text-3xl lg:text-5xl font-semibold text-center text-lime">
           Welcome
         </h1>
@@ -27,7 +27,7 @@ const JoinForm = () => {
         </p>
 
         {/* Form */}
-        <form className="flex flex-col gap-4 w-full px-4 py-8 mt-6 lg:mt-10 max-w-3xl min-h-[300px]">
+        <form className="flex flex-col gap-8 w-full px-4 py-8 mt-6 lg:mt-10 max-w-3xl min-h-[300px]">
           <Input
             type="text"
             label="Username"

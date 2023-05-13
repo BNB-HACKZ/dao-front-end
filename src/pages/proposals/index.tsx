@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Layout from "@/components/common/Layout";
+import Link from "next/link";
 
 const Proposals = () => {
   const proposals = [
@@ -18,6 +19,7 @@ const Proposals = () => {
       votesTotal: 0,
       votesQuorum: 0,
       votesQuorumReached: false,
+      id: 1,
     },
     {
       title: "Proposal 1",
@@ -34,6 +36,7 @@ const Proposals = () => {
       votesTotal: 0,
       votesQuorum: 0,
       votesQuorumReached: false,
+      id: 1,
     },
     {
       title: "Change the dynamics of the whole site",
@@ -50,6 +53,7 @@ const Proposals = () => {
       votesTotal: 0,
       votesQuorum: 0,
       votesQuorumReached: false,
+      id: 1,
     },
     {
       title: "Proposal 1",
@@ -66,6 +70,7 @@ const Proposals = () => {
       votesTotal: 0,
       votesQuorum: 0,
       votesQuorumReached: false,
+      id: 1,
     },
   ];
 
@@ -121,6 +126,7 @@ const Proposals = () => {
               status={proposal.status}
               proposer={proposal.proposer}
               endTime={proposal.endTime}
+              id={proposal.id}
             />
           ))}
         </div>
@@ -131,9 +137,12 @@ const Proposals = () => {
 
 export default Proposals;
 
-const ProposalCard = ({ title, status, proposer, endTime }) => {
+const ProposalCard = ({ title, status, proposer, endTime, id }) => {
   return (
-    <div className="flex flex-col items-start justify-between w-full h-full p-6 border border-[#333B56] rounded-lg shadow-lg">
+    <Link
+      href={`proposal/${id}`}
+      className="cursor-pointer trans transform hover:scale-105 flex flex-col items-start justify-between w-full h-full p-6 border border-[#333B56] rounded-lg shadow-lg"
+    >
       <div className="flex flex-col items-start justify-between w-full h-full gap-8">
         <div className="flex items-center justify-between w-full">
           <div>
@@ -179,6 +188,6 @@ const ProposalCard = ({ title, status, proposer, endTime }) => {
           </div>
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
