@@ -15,7 +15,7 @@ export const Hero = () => {
           />
         </div>
         {/* main div with hero text anf ctas */}
-        <div className="-mt-16w-full h-full flex flex-col justify-center items-center text-center z-10 lg:max-w-4xl mx-auto">
+        <div className="-mt-16 w-full h-full flex flex-col justify-center items-center text-center z-10 lg:max-w-4xl mx-auto">
           <h1 className="text-4xl md:text-7xl font-semibold text-white">
             <span className="text-[#89D472]"> Crowdfund </span> for Innovative
              causes on the blockchain
