@@ -8,7 +8,7 @@ import {
   darkTheme,
 } from "@rainbow-me/rainbowkit";
 import { configureChains, createClient, WagmiConfig } from "wagmi";
-import { mainnet, polygon, optimism, arbitrum, foundry } from "wagmi/chains";
+import { mainnet, polygon, optimism, arbitrum, foundry, bscTestnet, bsc } from "wagmi/chains";
 import { alchemyProvider } from "wagmi/providers/alchemy";
 import { publicProvider } from "wagmi/providers/public";
 import { useEffect } from "react";
@@ -16,7 +16,7 @@ import { useAccount } from "wagmi";
 import { useRouter } from "next/router";
 
 const { chains, provider } = configureChains(
-  [mainnet, polygon, optimism, arbitrum, foundry],
+  [bscTestnet, bsc, mainnet, polygon, optimism, arbitrum, foundry],
   [
     alchemyProvider({ apiKey: "FIOu28Q3CCOEkqymVRAu6impiDJtclAW" }),
     publicProvider(),
