@@ -20,7 +20,7 @@ git clone https://github.com/BNB-HACKZ/dao-front-end.git
 ```
 2. Change to the project directory: 
 ```bash
-cd dao-frontend
+cd dao-front-end
 ```
 3. Install the required dependencies: 
 ```bash
