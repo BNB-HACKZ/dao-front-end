@@ -15,10 +15,10 @@ export const Hero = () => {
           />
         </div>
         {/* main div with hero text anf ctas */}
-        <div className="w-full h-full flex flex-col justify-center items-center text-center z-10 lg:max-w-2xl mx-auto">
+        <div className="-mt-16w-full h-full flex flex-col justify-center items-center text-center z-10 lg:max-w-4xl mx-auto">
           <h1 className="text-4xl md:text-7xl font-semibold text-white">
-            The <span className="text-[#89D472]">innovative</span> way to build
-            your DAO
+            <span className="text-[#89D472]"> Crowdfund </span> for Innovative
+             causes on the blockchain
           </h1>
           <p className="text-white text-opacity-60 text-lg md:text-xl text-center pt-4 ">
             {" "}
@@ -26,8 +26,8 @@ export const Hero = () => {
             and raise funds for your causes.
           </p>
 
-          <button className="long-btn py-3 px-8 mt-8 flex items-center gap-2">
-            <span className="text-black uppercase">Build YOUR DAO</span>
+          <button className="long-btn py-3 px-10 mt-8 flex items-center gap-2">
+            <span className="text-black uppercase">Get Funding</span>
             <RocketLaunchIcon className="w-6 h-6 text-black" />
           </button>
         </div>

@@ -28,7 +28,7 @@ const JoinForm = () => {
         </p>
 
         {/* Form */}
-        <form className="flex flex-col gap-8 w-full px-4 py-8 mt-6 lg:mt-10 max-w-3xl min-h-[300px]">
+        <form className="flex flex-col gap-8 w-full px-4 py-8 mt-6 lg:mt-10 max-w-2xl min-h-[300px]">
           <Input
             type="text"
             label="Username"
@@ -62,7 +62,7 @@ const JoinForm = () => {
                 htmlFor="profile-image"
                 className="flex flex-col items-center justify-center text-sm w-16 square aspect-square rounded-full bg-slate-200 dark:bg-slate-400 cursor-pointer"
               >
-                <ArrowUpTrayIcon className="text-ld h-8 w-8" />
+                <ArrowUpTrayIcon className="text-ld h-6 w-6" />
                 <span className="text-ld text-[10px] cursor-pointer">
                   Upload
                 </span>
@@ -83,6 +83,8 @@ const JoinForm = () => {
                     src={imageUrl}
                     alt="Preview"
                     className="w-full h-full object-center object-cover"
+                    width={100}
+                    height={100}
                   />
                 </div>
                 <p className="text-white font-medium">Preview</p>
