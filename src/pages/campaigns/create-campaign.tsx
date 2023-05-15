@@ -1,68 +1,102 @@
 import Layout from "@/components/common/Layout";
-import { useState } from "react";
-import toast, { Toaster } from 'react-hot-toast';
+import { useEffect, useState } from "react";
+import toast, { Toaster } from "react-hot-toast";
+import { Web3Storage } from "web3.storage";
+import { ADDRESSES } from "@/constants/addresses";
+import { ABI } from "@/constants/abi";
+import { useContractWrite, useNetwork } from "wagmi";
 
-type ImageState = {
-  file: File | null
-  previewUrl: string | null
-}
+// Construct with token and endpoint
+const client = new Web3Storage({
+  token:
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweDYzRDdFRUI5NjQ3NWUwYjcxMjYxYTJhMjJGQWM1OTRGRTY2RjRkNzkiLCJpc3MiOiJ3ZWIzLXN0b3JhZ2UiLCJpYXQiOjE2NzUxODU3NTk1NDksIm5hbWUiOiJGaWxsaW9uIn0.ZgOQRRLkkRk8uchRIjrrof5zAuoBnqIA4WSAPJNESMk",
+});
 
 const CreateCampaign = () => {
+  const { chain } = useNetwork();
+  const [chainId, setChainId] = useState<keyof typeof ADDRESSES>(
+    1 as keyof typeof ADDRESSES
+  );
+
+  useEffect(() => {
+    if (chain) {
+      setChainId(chain.id as keyof typeof ADDRESSES);
+    }
+  }, [chain]);
+
+  const { data, isLoading, isSuccess, writeAsync } = useContractWrite({
+    mode: "recklesslyUnprepared",
+    address: ADDRESSES[chainId].CAMPAIGN_FACTORY as `0x${string}`,
+    abi: ABI.campaignFactory,
+  });
+
   const [tab1, setTab1] = useState<boolean>(true);
   const [tab2, setTab2] = useState<boolean>(false);
   const [name, setName] = useState("");
   const [campaignName, setCampaignName] = useState("");
   const [link, setLink] = useState("");
   const [projectDetails, setProjectDetails] = useState("");
-  const [coverImage, setCoverImage] = useState<ImageState>({
-    file: null,
-    previewUrl: null,
-  })
-  const [coverImageUrl, setCoverImageUrl] = useState('');
+  const [coverImage, setCoverImage] = useState<File | null>(null);
+  const [coverImageUrl, setCoverImageUrl] = useState("");
 
   const handleCoverImageChange = (e: any) => {
-    setCoverImage(e.target.files[0])
-    toast.success('Successfully added!');
-    setCoverImageUrl(URL.createObjectURL(e.target.files[0]))
-  }
+    setCoverImage(e.target.files[0]);
+    toast.success("Successfully added!");
+    setCoverImageUrl(URL.createObjectURL(e.target.files[0]));
+  };
 
   const handleTabChange = () => {
-    if (!name) {
-      toast.error('please fill in your name')
+    if (!name || !campaignName) {
+      toast.error("Please fill out all the fields");
+      return;
+    } else {
+      setTab1(false);
+      setTab2(true);
     }
-    if (!campaignName) {
-      toast.error('please fill in the Campaign name')
-    }
-    else {
-       setTab1(false);
-       setTab2(true);
-
-    }
-  
-   
-  }
-
+  };
 
   const CreateCampaign = async (e: any) => {
     e.preventDefault();
+    if (!name || !campaignName || !link || !projectDetails || !coverImage) {
+      toast.error("Please fill out all the fields");
+      return;
+    }
     try {
-
-      
+      const imgHash = await client.put([coverImage], {
+        wrapWithDirectory: false,
+      });
+      console.log("Image hash: ", imgHash);
+      //creating object containing all the data
+      const obj = {
+        name,
+        campaignName,
+        link,
+        projectDetails,
+        coverImage: imgHash,
+      };
+      console.log("Obj: ", obj);
+      //converting object to a blob
+      const blob = new Blob([JSON.stringify(obj)], {
+        type: "application/json",
+      });
+      //and then to a file
+      const file = [new File([blob], "obj.json")];
+      //uploading file to ipfs
+      const objHash = await client.put(file);
+      console.log("Obj hash: ", objHash);
       
     } catch (error) {
-
       console.log(error);
-      
     }
-  }
+  };
 
   return (
     <>
       <Layout>
         <div>
-        <Toaster />
+          <Toaster />
           <div>
-            <h1 className="startC font-bold">Start a Campaign</h1>
+            <h1 className="font-bold">Start a Campaign</h1>
           </div>
 
           <h2 className="text-xl text-[#89D472] pl-20 pt-5">
@@ -87,7 +121,9 @@ const CreateCampaign = () => {
               <div className="mb-7">
                 <label className="block text-white font-bold mb-2">Name</label>
                 <input
-                  onChange={(e)=>{setName(e.target.value)}}
+                  onChange={(e) => {
+                    setName(e.target.value);
+                  }}
                   className=" bg-gradient-to-r from-gray-900 to-gray-900 border-gray-900 text-white border rounded w-4/12 h-12 py-2 px-3  leading-tight "
                   placeholder="Fullname"
                 />
@@ -97,7 +133,9 @@ const CreateCampaign = () => {
                   Name of your Campaign
                 </label>
                 <input
-                 onChange={(e)=>{setCampaignName(e.target.value)}}
+                  onChange={(e) => {
+                    setCampaignName(e.target.value);
+                  }}
                   className=" bg-gradient-to-r from-gray-900 to-gray-900 text-white border  border-gray-900  rounded w-4/12 h-12 py-2 px-3  leading-tight "
                   placeholder="E.g. Grant to build a Solar powered shoe"
                 />
@@ -107,7 +145,9 @@ const CreateCampaign = () => {
                   Relevant Links
                 </label>
                 <input
-                 onChange={(e)=>{setLink(e.target.value)}}
+                  onChange={(e) => {
+                    setLink(e.target.value);
+                  }}
                   className=" bg-gradient-to-r from-gray-900 to-gray-900 text-white  border  border-gray-900  rounded w-4/12 h-12 py-2 px-3  leading-tight "
                   placeholder="www.xyz.com"
                 />
@@ -131,7 +171,9 @@ const CreateCampaign = () => {
                   Project Details
                 </label>
                 <textarea
-                  onChange={(e)=>{setProjectDetails(e.target.value)}}
+                  onChange={(e) => {
+                    setProjectDetails(e.target.value);
+                  }}
                   className=" bg-gradient-to-r from-gray-900 to-gray-900 text-white border border-gray-900 rounded w-4/12 h-48 py-2 px-3  leading-tight "
                   placeholder="Brief description of your project"
                 />
@@ -141,20 +183,17 @@ const CreateCampaign = () => {
                 <label className="block text-white font-bold mb-2">
                   Cover Image
                 </label>
-                
+
                 <input
                   type="file"
                   onChange={handleCoverImageChange}
                   className="file-input bg-gradient-to-r from-gray-900 to-gray-900 text-white border-dashed rounded-r-xl border-2 border-gray-600 rounded w-4/14 h-48 py-2 px-3  leading-tight "
-                  
                 />
               </div>
 
-              
-
-
               <div className=" justify-center">
                 <button
+                  onClick={CreateCampaign}
                   className="bfpe hover:bg-green-700 w-4/12 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                   type="button"
                 >
