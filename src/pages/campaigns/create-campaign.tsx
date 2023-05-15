@@ -14,17 +14,20 @@ const client = new Web3Storage({
 
 const CreateCampaign = () => {
   const { chain } = useNetwork();
-  const [chainId, setChainId] = useState<number>(1);
+  const [chainId, setChainId] = useState<
+    97 | 80001 | 43113 | (() => 97 | 80001 | 43113)
+  >(97);
 
   useEffect(() => {
     if (chain) {
-      setChainId(chain.id);
+      setChainId(chain.id as 97 | 80001 | 43113);
     }
   }, [chain]);
 
   const { data, isLoading, isSuccess, writeAsync } = useContractWrite({
     mode: "recklesslyUnprepared",
-    address: ADDRESSES[chainId as keyof typeof ADDRESSES].CAMPAIGN_FACTORY as `0x${string}`,
+    address: ADDRESSES[chainId as keyof typeof ADDRESSES]
+      .CAMPAIGN_FACTORY as `0x${string}`,
     abi: ABI.campaignFactory,
   });
 
