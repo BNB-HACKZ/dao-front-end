@@ -15,7 +15,7 @@ const client = new Web3Storage({
 const CreateCampaign = () => {
   const { chain } = useNetwork();
   const [chainId, setChainId] = useState<keyof typeof ADDRESSES>(
-    1 as keyof typeof ADDRESSES
+    1 as number as keyof typeof ADDRESSES
   );
 
   useEffect(() => {
