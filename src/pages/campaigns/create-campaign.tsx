@@ -37,6 +37,7 @@ const CreateCampaign = () => {
   const [campaignName, setCampaignName] = useState("");
   const [link, setLink] = useState("");
   const [projectDetails, setProjectDetails] = useState("");
+  const [amount, setAmount] = useState(0);
   const [coverImage, setCoverImage] = useState<File | null>(null);
   const [coverImageUrl, setCoverImageUrl] = useState("");
 
@@ -58,7 +59,7 @@ const CreateCampaign = () => {
 
   const CreateCampaign = async (e: any) => {
     e.preventDefault();
-    if (!name || !campaignName || !link || !projectDetails || !coverImage) {
+    if (!name || !campaignName || !link || !projectDetails || !coverImage || !amount) {
       toast.error("Please fill out all the fields");
       return;
     }
@@ -85,6 +86,9 @@ const CreateCampaign = () => {
       //uploading file to ipfs
       const objHash = await client.put(file);
       console.log("Obj hash: ", objHash);
+
+      //calling the contract
+      // const tx = await writeAsync("createCampaign", [objHash]);
     } catch (error) {
       console.log(error);
     }
@@ -188,6 +192,21 @@ const CreateCampaign = () => {
                   type="file"
                   onChange={handleCoverImageChange}
                   className="file-input bg-gradient-to-r from-gray-900 to-gray-900 text-white border-dashed rounded-r-xl border-2 border-gray-600 rounded w-4/14 h-48 py-2 px-3  leading-tight "
+                />
+              </div>
+
+              <div className="mb-7">
+                <label className="block text-white font-bold mb-2">
+                  Amount to be raised(BNB)
+                </label>
+                <input
+                  type="number"
+                  value={amount}
+                  onChange={(e) => {
+                    setAmount(Number(e.target.value));
+                  }}
+                  className=" bg-gradient-to-r from-gray-900 to-gray-900 text-white border border-gray-900 rounded w-4/12 h-12 py-2 px-3  leading-tight "
+                  placeholder="E.g. 10"
                 />
               </div>
 
