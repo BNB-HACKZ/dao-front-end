@@ -19,7 +19,7 @@ const CreateCampaign = () => {
   );
 
   useEffect(() => {
-    if (chain) {
+    if (chain) { 
       setChainId(chain.id as keyof typeof ADDRESSES);
     }
   }, [chain]);
