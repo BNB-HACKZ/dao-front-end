@@ -2,6 +2,7 @@ import React from "react";
 import Layout from "@/components/common/Layout";
 import { useRouter } from "next/router";
 
+
 const JoinOurDao = () => {
   const router = useRouter();
   return (

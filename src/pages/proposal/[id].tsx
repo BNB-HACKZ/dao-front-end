@@ -1,16 +1,33 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Layout from "@/components/common/Layout";
 import { useRouter } from "next/router";
+import { useContractWrite, useNetwork } from "wagmi";
+import { ADDRESSES } from "@/constants/addresses";
+import { ABI } from "@/constants/abi";
 
 const SingleProposal = () => {
   const router = useRouter();
   const { id } = router.query;
+  const { chain } = useNetwork();
+  const [chainId, setChainId] = useState<keyof typeof ADDRESSES>(1);
+
+  useEffect(() => {
+    if (chain) {
+      setChainId(chain.id as keyof typeof ADDRESSES);
+    }
+  }, [chain]);
+
+  const { data, isLoading, isSuccess, writeAsync } = useContractWrite({
+    mode: "recklesslyUnprepared",
+    address: ADDRESSES[chainId].CROSSCHAIN_DAO as `0x${string}`,
+    abi: ABI.dao,
+  });
 
   const [vote, setVote] = useState("");
 
   const obj = {
     title: "Change the dynamics of the whole site",
-    status: "Closed",
+    status: "Open",
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla euismod, nisl eget ultricies aliquam, nunc nisl aliquet nunc, quis aliquam nis",
     proposer: "0x1234567890123456789012345678901234567890",
@@ -20,6 +37,7 @@ const SingleProposal = () => {
     current_no_votes: 24,
     current_abstain_votes: 37,
   };
+
   return (
     <Layout>
       <div className="text-white max-w-7xl mx-auto px-4">

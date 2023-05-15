@@ -3,6 +3,17 @@ import React, { useState } from "react";
 import Input from "@/components/common/Input";
 import { ArrowUpTrayIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
+import toast, { Toaster } from "react-hot-toast";
+import { Web3Storage } from "web3.storage";
+import { ADDRESSES } from "@/constants/addresses";
+import { ABI } from "@/constants/abi";
+import { useContractWrite, useNetwork } from "wagmi";
+
+// Construct with token and endpoint
+const client = new Web3Storage({
+  token:
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweDYzRDdFRUI5NjQ3NWUwYjcxMjYxYTJhMjJGQWM1OTRGRTY2RjRkNzkiLCJpc3MiOiJ3ZWIzLXN0b3JhZ2UiLCJpYXQiOjE2NzUxODU3NTk1NDksIm5hbWUiOiJGaWxsaW9uIn0.ZgOQRRLkkRk8uchRIjrrof5zAuoBnqIA4WSAPJNESMk",
+});
 
 const JoinForm = () => {
   const [username, setUsername] = useState<string>("");
@@ -16,6 +27,36 @@ const JoinForm = () => {
       setImageUrl(URL.createObjectURL(e.target.files[0]));
     }
   };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!username || !bio || !pfp) {
+      toast.error("Please fill in all fields");
+      return;
+    }
+    try {
+      const imgHash = await client.put([pfp], {
+        wrapWithDirectory: false,
+      });
+      console.log("Image hash: ", imgHash);
+      //creating object containing all the data
+      const obj = {
+        username,
+        bio,
+        coverImage: imgHash,
+      };
+      console.log("Obj: ", obj);
+      //converting object to a blob
+      const blob = new Blob([JSON.stringify(obj)], {
+        type: "application/json",
+      });
+      //and then to a file
+      const file = [new File([blob], "pfp.json")];
+      //uploading file to ipfs
+      const objHash = await client.put(file);
+      console.log("Obj hash: ", objHash);
+    } catch (error) {}
+  };
   return (
     <Layout>
       <div className="flex flex-col items-start w-full max-w-7xl mx-auto">
@@ -28,7 +69,9 @@ const JoinForm = () => {
         </p>
 
         {/* Form */}
-        <form className="flex flex-col gap-8 w-full px-4 py-8 mt-6 lg:mt-10 max-w-2xl min-h-[300px]">
+        <form
+          onSubmit={handleSubmit}
+          className="flex flex-col gap-8 w-full px-4 py-8 mt-6 lg:mt-10 max-w-2xl min-h-[300px]">
           <Input
             type="text"
             label="Username"
@@ -93,7 +136,9 @@ const JoinForm = () => {
           </div>
 
           {/* Submit Button */}
-          <button className="long-btn w-full py-4 my-6">
+          <button
+            type="submit"
+            className="long-btn w-full py-4 my-6">
             <span className="text-black uppercase">Join</span>
           </button>
         </form>
