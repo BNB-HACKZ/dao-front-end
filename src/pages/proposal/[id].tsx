@@ -9,17 +9,20 @@ const SingleProposal = () => {
   const router = useRouter();
   const { id } = router.query;
   const { chain } = useNetwork();
-  const [chainId, setChainId] = useState<keyof typeof ADDRESSES>(1);
+  const [chainId, setChainId] = useState<
+    97 | 80001 | 43113 | (() => 97 | 80001 | 43113)
+  >(97);
 
   useEffect(() => {
     if (chain) {
-      setChainId(chain.id as keyof typeof ADDRESSES);
+      setChainId(chain.id as 97 | 80001 | 43113);
     }
   }, [chain]);
 
   const { data, isLoading, isSuccess, writeAsync } = useContractWrite({
     mode: "recklesslyUnprepared",
-    address: ADDRESSES[chainId].CROSSCHAIN_DAO as `0x${string}`,
+    address: ADDRESSES[chainId as keyof typeof ADDRESSES]
+      .CROSSCHAIN_DAO as `0x${string}`,
     abi: ABI.dao,
   });
 
