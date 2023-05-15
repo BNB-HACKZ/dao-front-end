@@ -14,19 +14,17 @@ const client = new Web3Storage({
 
 const CreateCampaign = () => {
   const { chain } = useNetwork();
-  const [chainId, setChainId] = useState<keyof typeof ADDRESSES>(
-    1 as number as keyof typeof ADDRESSES
-  );
+  const [chainId, setChainId] = useState<number>(1);
 
   useEffect(() => {
-    if (chain) { 
-      setChainId(chain.id as keyof typeof ADDRESSES);
+    if (chain) {
+      setChainId(chain.id);
     }
   }, [chain]);
 
   const { data, isLoading, isSuccess, writeAsync } = useContractWrite({
     mode: "recklesslyUnprepared",
-    address: ADDRESSES[chainId].CAMPAIGN_FACTORY as `0x${string}`,
+    address: ADDRESSES[chainId as keyof typeof ADDRESSES].CAMPAIGN_FACTORY as `0x${string}`,
     abi: ABI.campaignFactory,
   });
 
@@ -84,7 +82,6 @@ const CreateCampaign = () => {
       //uploading file to ipfs
       const objHash = await client.put(file);
       console.log("Obj hash: ", objHash);
-      
     } catch (error) {
       console.log(error);
     }
