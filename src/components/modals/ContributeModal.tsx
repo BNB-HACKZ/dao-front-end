@@ -10,8 +10,7 @@ interface Props {
 }
 
 const ContributeModal = ({ isOpen, closeModal }: Props) => {
-  const [amount, setAmount] = React.useState(0);
-  const [currency, setCurrency] = React.useState("ETH");
+  const [amount, setAmount] = React.useState("");
   const [memo, setMemo] = React.useState("");
   return (
     <Transition appear show={isOpen} as={Fragment}>
@@ -69,24 +68,10 @@ const ContributeModal = ({ isOpen, closeModal }: Props) => {
                     label="Amount"
                     type="number"
                     name="amount"
-                    placeholder="0.0"
-                    value={amount.toString()}
-                    onChange={(e) => setAmount(Number(e.target.value))}
+                    placeholder="enter an amount in BNB"
+                    value={amount}
+                    onChange={(e) => setAmount(e.target.value)}
                   />
-                  {/* Currency */}
-                  <div className="flex flex-col gap-2 w-full">
-                    <label className="font-medium text-white">Currency</label>
-                    <select
-                      className="w-full bg-transparent text-white border border-[#363E5B] rounded-md px-3 py-2 focus:ring-0 focus:border-none"
-                      value={currency}
-                      onChange={(e) => setCurrency(e.target.value)}
-                    >
-                      <option value="ETH">ETH</option>
-                      <option value="BTC">BTC</option>
-                      <option value="USDT">USDT</option>
-                      <option value="USDC">USDC</option>
-                    </select>
-                  </div>
 
                   {/* Short Message */}
                   <Input

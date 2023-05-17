@@ -35,6 +35,16 @@ const Campaign = () => {
     abi: ABI.campaign,
     functionName: "target",
   });
+  const { data: raisedAmount } = useContractRead({
+    address: id as `0x${string}`,
+    abi: ABI.campaign,
+    functionName: "raisedFunds",
+  });
+  const { data: DONORS } = useContractRead({
+    address: id as `0x${string}`,
+    abi: ABI.campaign,
+    functionName: "_ALL_DONORS",
+  });
 
   useEffect(() => {
     async function getData() {
