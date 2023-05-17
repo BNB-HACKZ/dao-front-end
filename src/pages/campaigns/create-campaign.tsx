@@ -5,6 +5,7 @@ import { Web3Storage } from "web3.storage";
 import { ADDRESSES } from "@/constants/addresses";
 import { ABI } from "@/constants/abi";
 import { useContractWrite, useNetwork } from "wagmi";
+import { prepareWriteContract, writeContract } from "@wagmi/core";
 
 // Construct with token and endpoint
 const client = new Web3Storage({
@@ -35,10 +36,12 @@ const CreateCampaign = () => {
   const [tab2, setTab2] = useState<boolean>(false);
   const [name, setName] = useState("");
   const [campaignName, setCampaignName] = useState("");
+  const [target, setTarget] = useState('');
   const [link, setLink] = useState("");
   const [projectDetails, setProjectDetails] = useState("");
   const [coverImage, setCoverImage] = useState<File | null>(null);
   const [coverImageUrl, setCoverImageUrl] = useState("");
+  const [inTxn, setInTxn] = useState(false);
 
   const handleCoverImageChange = (e: any) => {
     setCoverImage(e.target.files[0]);
@@ -63,6 +66,8 @@ const CreateCampaign = () => {
       return;
     }
     try {
+      
+      setInTxn(true)
       const imgHash = await client.put([coverImage], {
         wrapWithDirectory: false,
       });
@@ -85,7 +90,30 @@ const CreateCampaign = () => {
       //uploading file to ipfs
       const objHash = await client.put(file);
       console.log("Obj hash: ", objHash);
+
+      const satelliteAddr = '0x47A62Af19657263E3E0b60312f97F7464F70Ba35';
+
+      console.log( `SATE: `,satelliteAddr)
+
+      const _target = Number(target);
+      console.log(objHash, _target, satelliteAddr)
+
+      const configure = await prepareWriteContract({
+        address: "0xb4439634ad988555F2a5EB3810ae589A353A2B77",
+        abi: ABI.campaignFactory,
+        functionName: "createCampaign",
+        args: [objHash, _target, satelliteAddr],
+      });
+      const data = await writeContract(configure)
+     
+
+
+      const tx = await data.wait();
+      toast.success('Campaign Successfully created!')
+      setInTxn(false)
     } catch (error) {
+      setInTxn(false)
+      toast.error('Something Went wrong')
       console.log(error);
     }
   };
@@ -152,6 +180,18 @@ const CreateCampaign = () => {
                   placeholder="www.xyz.com"
                 />
               </div>
+              <div className="mb-7">
+                <label className="block text-white font-bold mb-2">
+                  Target Amount
+                </label>
+                <input
+                  onChange={(e) => {
+                    setTarget(e.target.value);
+                  }}
+                  className=" bg-gradient-to-r from-gray-900 to-gray-900 text-white  border  border-gray-900  rounded w-4/12 h-12 py-2 px-3  leading-tight "
+                  placeholder="1 BNB"
+                />
+              </div>
               <div className=" justify-center">
                 <button
                   onClick={handleTabChange}
@@ -197,7 +237,7 @@ const CreateCampaign = () => {
                   className="bfpe hover:bg-green-700 w-4/12 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                   type="button"
                 >
-                  Publish
+                 {inTxn ? 'Processing': 'publish'}
                 </button>
               </div>
             </form>

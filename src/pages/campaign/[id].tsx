@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Layout from "@/components/common/Layout";
 import { ThreeAnysImg } from "../../../public";
 import Image from "next/image";
 import ContributeModal from "@/components/modals/ContributeModal";
+import { useContractRead } from "wagmi";
+import { ABI } from "@/constants/abi";
+import { getJSONFromFileinCID } from "@/utils/storage";
 
 const obj = {
   title: "Building a plant powered Blockchain",
@@ -21,92 +24,117 @@ const Campaign = () => {
   const router = useRouter();
   const { id } = router.query;
   const [showModal, setShowModal] = React.useState(false);
+  const [theData, setTheData] = useState<any>(null);
+  const { data, isError, isLoading } = useContractRead({
+    address: id as `0x${string}`,
+    abi: ABI.campaign,
+    functionName: "campaignCID",
+  });
+  const { data: raising } = useContractRead({
+    address: id as `0x${string}`,
+    abi: ABI.campaign,
+    functionName: "target",
+  });
+
+  useEffect(() => {
+    async function getData() {
+      if (data) {
+        const _data = await getJSONFromFileinCID(data);
+        console.log(_data?.coverImage);
+        setTheData(_data);
+      }
+    }
+    getData();
+  }, [data]);
+
+  if (!theData) return null;
   return (
     <>
-      <ContributeModal isOpen={showModal} closeModal={() => setShowModal(false)} />
-    <Layout>
-      <div>
-        <div className="w-full flex flex-col lg:flex-row max-w-7xl mx-auto lg:py-8">
-          <div className="w-full lg:w-1/2">
-            {/* Image */}
-            <div className="w-full h-[250px] lg:h-[400px] rounded-xl overflow-hidden">
-              <Image
-                src={ThreeAnysImg}
-                alt={obj.title}
-                className="object-cover w-full h-full"
-              />
+      <ContributeModal
+        isOpen={showModal}
+        closeModal={() => setShowModal(false)}
+      />
+      <Layout>
+        <div>
+          <div className="w-full flex flex-col lg:flex-row max-w-7xl mx-auto lg:py-8">
+            <div className="w-full lg:w-1/2">
+              {/* Image */}
+              <div className="w-full h-[250px] lg:h-[400px] px-8 rounded-xl overflow-hidden">
+        <img
+          src={`https://dweb.link/ipfs/${theData?.coverImage}`}
+          alt={theData?.title}
+          className="object-cover w-full h-full"
+        />
+              </div>
             </div>
-          </div>
 
-          <div className="w-full lg:w-1/2 h-full">
-            {/* About */}
-            <div className="flex flex-col w-full">
-              {/* Title */}
-              <h1 className="text-3xl font-bold text-white">{obj.title}</h1>
-              <p className="text-[#8E8F94] py-4">
-                inventore veritatis et quasi architecto beatae vitae dicta sunt
-                explicabo. Nemo enim ipsam voluptatem quia voluptas sit
-                aspernatur aut odit aut fugit, sed quia consequuntur magni
-                dolores eos qui ratione voluptatem sequi nesciunt. Neque porro
-                quisquam est, qui dolorem ipsum quia dolor sit amet,
-                consectetur, adipisci velit, sed quia non numquam ei.
-              </p>
+            <div className="w-full lg:w-1/2 h-full">
+              {/* About */}
+              <div className="flex flex-col w-full">
+                {/* Title */}
+                <h1 className="text-3xl font-bold text-white">
+                  {theData?.campaignName}
+                </h1>
+                <p className="text-[#8E8F94] py-4">{theData?.projectDetails}</p>
 
-              {/* Goal and ranger */}
-              <div className="py-4 lg:py-8">
+                {/* Goal and ranger */}
+                <div className="py-4 lg:py-8">
+                  <div className="flex justify-between items-center">
+                    <div className="flex items-center">
+                      <h2 className="text-2xl font-bold text-lime">
+                        {obj.currentDonatedAmount} {obj.currency}
+                      </h2>
+                      <span className="text-[#8E8F94] px-2">raised</span>
+                    </div>
+                    <div className="flex items-center">
+                      <h2 className="text-2xl font-bold text-lime">
+                        {obj.goal} {obj.currency}
+                      </h2>
+                      <span className="text-[#8E8F94] px-2">goal</span>
+                    </div>
+                  </div>
+                  {/* Ranger */}
+                  <div className="w-full h-2 bg-[#353D5A] rounded-full mt-4">
+                    <div
+                      className="h-full bg-lime rounded-full"
+                      style={{
+                        width: `${
+                          (obj.currentDonatedAmount / obj.goal) * 100
+                        }%`,
+                      }}
+                    ></div>
+                  </div>
+                </div>
+                {/* Proposed by and proposal date */}
                 <div className="flex justify-between items-center">
                   <div className="flex items-center">
-                    <h2 className="text-2xl font-bold text-lime">
-                      {obj.currentDonatedAmount} {obj.currency}
+                    <h2 className="text-xl font-bold text-white">
+                      Proposed by
                     </h2>
-                    <span className="text-[#8E8F94] px-2">raised</span>
+                    <span className="text-[#8E8F94] px-2">{obj.proposer}</span>
                   </div>
                   <div className="flex items-center">
-                    <h2 className="text-2xl font-bold text-lime">
-                      {obj.goal} {obj.currency}
+                    <h2 className="text-xl font-bold text-white">
+                      Proposed on:
                     </h2>
-                    <span className="text-[#8E8F94] px-2">goal</span>
+                    <span className="text-[#8E8F94] px-2">{obj.date}</span>
                   </div>
                 </div>
-                {/* Ranger */}
-                <div className="w-full h-2 bg-[#353D5A] rounded-full mt-4">
-                  <div
-                    className="h-full bg-lime rounded-full"
-                    style={{
-                      width: `${(obj.currentDonatedAmount / obj.goal) * 100}%`,
-                    }}
-                  ></div>
-                </div>
-              </div>
-              {/* Proposed by and proposal date */}
-              <div className="flex justify-between items-center">
-                <div className="flex items-center">
-                  <h2 className="text-xl font-bold text-white">
-                    Proposed by
-                  </h2>
-                  <span className="text-[#8E8F94] px-2">{obj.proposer}</span>
-                </div>
-                <div className="flex items-center">
-                  <h2 className="text-xl font-bold text-white">
-                    Proposed on:
-                  </h2>
-                  <span className="text-[#8E8F94] px-2">{obj.date}</span>
-                </div>
-              </div>
-              {/* Contribute Button */}
-              <div className="flex items-center justify-center w-full mt-10">
+                {/* Contribute Button */}
+                <div className="flex items-center justify-center w-full mt-10">
                   <button
                     onClick={() => setShowModal(true)}
-                    className="long-btn w-full py-3 uppercase">
-                  <span className="text-black">Contribute</span>
-                </button>
+                    className="long-btn w-full py-3 uppercase"
+                  >
+                    <span className="text-black">Contribute</span>
+                  </button>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
       </Layout>
-      </>
+    </>
   );
 };
 
