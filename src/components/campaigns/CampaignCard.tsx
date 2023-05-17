@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { useContractRead } from "wagmi";
 import { ABI } from "@/constants/abi";
 import { getJSONFromFileinCID } from "@/utils/storage";
-import { BigNumber } from "ethers";
+import { BigNumberish, ethers } from "ethers";
 
 interface CampaignCardProps {
   campaign: string;
@@ -24,6 +24,7 @@ const CampaignCard = ({ campaign }: CampaignCardProps) => {
     functionName: "target",
   });
 
+    const [raisingAmountState, setraisingAmountState] = useState<any>(null);
   useEffect(() => {
     async function getData() {
       if (data) {
@@ -31,6 +32,11 @@ const CampaignCard = ({ campaign }: CampaignCardProps) => {
         console.log(_data);
         setTheData(_data);
       }
+            if (raising) {
+              setraisingAmountState(
+                Number(ethers.utils.formatEther(raising as BigNumberish))
+              );
+            }
     }
     getData();
   }, [data]);
@@ -56,7 +62,7 @@ const CampaignCard = ({ campaign }: CampaignCardProps) => {
         <span>Raising</span>
         <div className="flex gap-1 items-center justify-start w-full h-8 text-lime">
           <span className="font-semibold">
-            {Number(theData?.raising?._hex)}
+            {raisingAmountState}
           </span>
           <span className="font-semibold">BNB</span>
         </div>

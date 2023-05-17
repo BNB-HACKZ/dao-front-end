@@ -104,7 +104,7 @@ const CreateCampaign = () => {
         functionName: "createCampaign",
         args: [objHash, _target, satelliteAddr],
       });
-      const data = await writeContract(configure)
+      const data = await writeContract(configure);
      
 
 
