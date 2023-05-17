@@ -2,6 +2,8 @@ import React, {useState} from "react";
 import { ChevronRightIcon } from "@heroicons/react/24/outline";
 import { ThreeAnysImg } from "../../../public";
 import CampaignCard from "./CampaignCard";
+import { useContractRead } from "wagmi";
+import { ABI } from "@/constants/abi";
 
 const campaigns = [
   {
@@ -29,19 +31,25 @@ const campaigns = [
 
 
 const Categories = () => {
-  const [AllCampaigns, setAllCampaigns] = useState(campaigns);
+  const { data, isError, isLoading } = useContractRead({
+    address: "0xb4439634ad988555F2a5EB3810ae589A353A2B77",
+    abi: ABI.campaignFactory,
+    functionName: "getAllCampaigns",
+  });
+  console.log("All campaigns: ", data);
+  const [AllCampaigns, setAllCampaigns] = useState<string[]>(data as unknown as string[]);
   const [activeCategory, setActiveCategory] = useState("All");
 
   const handleCategoryChange = (category: string) => {
     setActiveCategory(category);
-    if (category === "All") {
-      setAllCampaigns(campaigns);
-    } else {
-      const filteredCampaigns = campaigns.filter(
-        (campaign) => campaign.category.toLowerCase() === category.toLowerCase()
-      );
-      setAllCampaigns(filteredCampaigns);
-    }
+    // if (category === "All") {
+    //   setAllCampaigns(campaigns);
+    // } else {
+    //   const filteredCampaigns = campaigns.filter(
+    //     (campaign) => campaign.category.toLowerCase() === category.toLowerCase()
+    //   );
+    //   setAllCampaigns(filteredCampaigns);
+    // }
   };
 
   const categories = ["All", "Blockchain", "Education", "Health"];
@@ -77,7 +85,7 @@ const Categories = () => {
       
       {/* Grid of campaign cards, 1 card on mobile, 3 on lg screens */}
       <div className="grid grid-cols-1 gap-8 mt-4 md:grid-cols-2 lg:grid-cols-3 pt-12">
-        {AllCampaigns.map((campaign, index) => (
+        {AllCampaigns?.map((campaign, index) => (
           <CampaignCard key={index} campaign={campaign} />
         ))}
       </div>

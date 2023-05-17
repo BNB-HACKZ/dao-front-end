@@ -1,9 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import { ChevronRightIcon } from "@heroicons/react/24/outline";
 import { ThreeAnysImg } from "../../../public";
 import CampaignCard from "./CampaignCard";
+import { useContractRead } from "wagmi";
+import { ABI } from "@/constants/abi";
 
 const PopularCauses = () => {
+    const { data, isError, isLoading } = useContractRead({
+      address: "0xb4439634ad988555F2a5EB3810ae589A353A2B77",
+      abi: ABI.campaignFactory,
+      functionName: "getAllCampaigns",
+    });
+    console.log("All campaigns: ", data);
+    const [AllCampaigns, setAllCampaigns] = useState<string[]>(
+      data as unknown as string[]
+    );
   return (
     <div className="w-full py-12">
       <div className="w-full flex items-center justify-between">
@@ -17,7 +28,7 @@ const PopularCauses = () => {
 
       {/* Grid of campaign cards, 1 card on mobile, 3 on lg screens */}
       <div className="grid grid-cols-1 gap-8 mt-4 md:grid-cols-2 lg:grid-cols-3 pt-12">
-        {campaigns.map((campaign, index) => (
+        {AllCampaigns?.map((campaign, index) => (
           <CampaignCard key={index} campaign={campaign} />
         ))}
       </div>

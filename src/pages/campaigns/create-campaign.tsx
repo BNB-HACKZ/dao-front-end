@@ -39,7 +39,6 @@ const CreateCampaign = () => {
   const [target, setTarget] = useState('');
   const [link, setLink] = useState("");
   const [projectDetails, setProjectDetails] = useState("");
-  const [amount, setAmount] = useState(0);
   const [coverImage, setCoverImage] = useState<File | null>(null);
   const [coverImageUrl, setCoverImageUrl] = useState("");
   const [inTxn, setInTxn] = useState(false);
@@ -62,7 +61,7 @@ const CreateCampaign = () => {
 
   const CreateCampaign = async (e: any) => {
     e.preventDefault();
-    if (!name || !campaignName || !link || !projectDetails || !coverImage || !amount) {
+    if (!name || !campaignName || !link || !projectDetails || !coverImage) {
       toast.error("Please fill out all the fields");
       return;
     }
@@ -100,11 +99,11 @@ const CreateCampaign = () => {
       console.log(objHash, _target, satelliteAddr)
 
       const configure = await prepareWriteContract({
-        address: "0xe8d3a73f6351f9f5dd6A577aD4ddF7d5C84DF5C8",
+        address: "0xb4439634ad988555F2a5EB3810ae589A353A2B77",
         abi: ABI.campaignFactory,
-        functionName: 'createCampaign',
+        functionName: "createCampaign",
         args: [objHash, _target, satelliteAddr],
-      })
+      });
       const data = await writeContract(configure)
      
 
@@ -229,21 +228,6 @@ const CreateCampaign = () => {
                   type="file"
                   onChange={handleCoverImageChange}
                   className="file-input bg-gradient-to-r from-gray-900 to-gray-900 text-white border-dashed rounded-r-xl border-2 border-gray-600 rounded w-4/14 h-48 py-2 px-3  leading-tight "
-                />
-              </div>
-
-              <div className="mb-7">
-                <label className="block text-white font-bold mb-2">
-                  Amount to be raised(BNB)
-                </label>
-                <input
-                  type="number"
-                  value={amount}
-                  onChange={(e) => {
-                    setAmount(Number(e.target.value));
-                  }}
-                  className=" bg-gradient-to-r from-gray-900 to-gray-900 text-white border border-gray-900 rounded w-4/12 h-12 py-2 px-3  leading-tight "
-                  placeholder="E.g. 10"
                 />
               </div>
 
