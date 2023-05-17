@@ -30,6 +30,12 @@ export default function Navbar() {
               CAMPAIGNS
             </Link>
             <Link
+              href="/proposals"
+              className="text-base font-medium text-gray-500"
+            >
+              PROPOSALS
+            </Link>
+            <Link
               href="/join-our-dao"
               className="text-base font-medium text-gray-500"
             >
