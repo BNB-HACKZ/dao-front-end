@@ -3,15 +3,49 @@ import { Dialog, Transition } from "@headlessui/react";
 import { Fragment } from "react";
 import { XMarkIcon } from "@heroicons/react/24/solid";
 import Input from "@/components/common/Input";
+import { useContractRead } from "wagmi";
+import { ABI } from "@/constants/abi";
+import { toast } from "react-hot-toast";
+import { prepareWriteContract, writeContract } from "@wagmi/core";
+import { ethers } from "ethers";
 
 interface Props {
   isOpen: boolean;
   closeModal: () => void;
+  campaign: any;
 }
 
-const ContributeModal = ({ isOpen, closeModal }: Props) => {
+const ContributeModal = ({ isOpen, closeModal, campaign }: Props) => {
   const [amount, setAmount] = React.useState("");
   const [memo, setMemo] = React.useState("");
+
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+    if (!amount || !memo) return toast.error("Please fill all fields");
+    try {
+      const configure = await prepareWriteContract({
+        address: campaign as `0x${string}`,
+        abi: ABI.campaign,
+        functionName: "donate",
+        args: [memo],
+        overrides: {
+          value: ethers.utils.parseEther(amount),
+          // gasLimit: 
+        },
+      });
+      const data = await writeContract({
+        ...configure,
+
+      });
+      console.log(data);
+      closeModal();
+      toast.success(`Thank you for your contribution. View on explorer: https://testnet.bscscan.com/tx/${data.hash}`);
+    } catch (error: any) {
+      console.log(error);
+      toast.error(error);
+    }
+  };
+
   return (
     <Transition appear show={isOpen} as={Fragment}>
       <Dialog as="div" className="relative z-10" onClose={closeModal}>
@@ -62,7 +96,10 @@ const ContributeModal = ({ isOpen, closeModal }: Props) => {
                 </div>
 
                 {/* Form */}
-                <form className="flex flex-col gap-4 mt-4">
+                <form
+                  onSubmit={handleSubmit}
+                  className="flex flex-col gap-4 mt-4"
+                >
                   {/* Amount */}
                   <Input
                     label="Amount"
