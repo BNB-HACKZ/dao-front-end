@@ -38,6 +38,8 @@ const ContributeModal = ({ isOpen, closeModal, campaign }: Props) => {
 
       });
       console.log(data);
+      closeModal();
+      toast.success(`Thank you for your contribution. View on explorer: https://testnet.bscscan.com/tx/${data.hash}`);
     } catch (error: any) {
       console.log(error);
       toast.error(error);
