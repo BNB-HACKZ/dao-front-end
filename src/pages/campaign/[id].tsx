@@ -154,6 +154,7 @@ const Campaign = () => {
                 <div className="flex items-center justify-center w-full mt-10">
                   <button
                     onClick={() => setShowModal(true)}
+                    disabled={raisedAmountState >= raisingAmountState}
                     className="long-btn w-full py-3 uppercase"
                   >
                     <span className="text-black">Contribute</span>
