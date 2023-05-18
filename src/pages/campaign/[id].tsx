@@ -82,6 +82,7 @@ const Campaign = () => {
       <ContributeModal
         isOpen={showModal}
         closeModal={() => setShowModal(false)}
+        campaign={id}
       />
       <Layout>
         <div>
